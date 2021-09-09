@@ -1,0 +1,63 @@
+/* overall list dimensions */
+#imageTextListCollection {
+    margin: 0px 110px;
+    width: 531px; /* +31 px to account for margins applied by ListView */
+    height: 637px;
+}
+
+/*-------------------------------------------------------------------------------------------*/
+/* imageTestList-collection - used in app template collection page in portrait*/
+/*-------------------------------------------------------------------------------------------*/
+
+/* style the background color of the filled-selection style items */
+.win-selectionstylefilled :not(.win-footprint).win-container {
+    background-color: transparent;
+}
+
+.win-selectionstylefilled .win-container.win-swipe:hover {
+    background-color: transparent;
+}
+
+/* individual item dimensions */
+#imageTextListCollection .imageTextListCollection {
+    display: -ms-grid;
+    width: 100%;
+    height: 120px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+/* image */
+.imageTextListCollection img.imageTextListCollectionImage {
+    -ms-grid-column: 1;
+    width: 110px;
+    height: 110px;
+    margin: 5px;
+}
+
+.imageTextListCollection .imageTextListCollectionTextArea {
+    -ms-grid-column: 2;
+    margin: 9px 5px 5px 5px;
+    line-height: 20px;
+}
+
+/* text line 1 */
+.imageTextListCollection .imageTextListCollectionTextStrong {
+    width: 360px;
+    height: 20px;
+    overflow: hidden;
+}
+
+/* text line 2 */
+.imageTextListCollection .imageTextListCollectionTextLight {
+    width: 360px;
+    height: 20px;
+    overflow: hidden;
+}
+
+/* text line 3 */
+.imageTextListCollection .imageTextListCollectionText {
+    width: 360px;
+    height: 60px;
+    overflow: hidden;
+}

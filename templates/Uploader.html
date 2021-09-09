@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Upload file</title>
+
+<script src="../static/js/jQeury.js"></script>
+<style>
+table, td, th
+{
+	border:1px solid green;
+}
+body{text-align:center}
+.main{
+	text-align: center;
+	background-color: #fff;
+	border-radius: 20px;
+	width: 300px;
+	height: 350px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+}
+
+#divcss5{margin:0 auto;border:1px solid #000;width:300px;height:100px}
+th
+{
+	background-color:green;
+	color:white;
+}
+</style>
+</head>
+
+<body>
+
+
+
+
+<div class="main">
+    <div>
+         <table class="center" id="filetable">
+            <tr >
+                <th>Index</th>
+                <th>filename</th>
+                <th>delete</th>
+                <th>download</th>
+            </tr>
+
+         </table>
+    </div>
+
+    <div id="divcss5">
+   <input id="input" type="file" name = 'file uploader' class="center" style="left: 50%;top: 50%">
+    <button id="upload" class="center">upload</button>
+    </div>
+</div>
+
+
+</body>
+<script>
+    $(loadfiles);
+    function onPageload(){
+
+    }
+    function loadfiles(){
+        $.ajax({
+            method: "GET",
+            url: "/getfilenames",
+            success(data){
+                data = data.filelist
+                console.log(data)
+                $("#filetable data").remove()
+                for(let i =0;i<data.length;i++){
+                    console.log(data[i])
+                    $("#filetable").append(
+                        "<tr id='data'>" +
+                        "<td>"+i+"</td>"+
+                        "<td>"+data[i]+"</td>"+
+                        "<td>"+"<button onClick='deletefile("+i+")'>delete</button>"+"</td>"+
+                        "<td>"+ "<button onclick='downloadfile("+i+")'>download</button>"+"</td>"+
+                        "</tr>"
+
+                    )
+                }
+            },
+            error(info){
+                console.log(info)
+            }
+        })
+    }
+
+    function downloadfile(i){
+        window.open('/download/'+i)
+    }
+    function deletefile(i){
+        $.ajax({
+
+            url:"/delete/"+i,
+            methods:["GET"],
+            success(data){
+                console.log(data);
+                loadfiles()
+            },
+            error(info) {
+                console.log(info)
+            }
+        })
+    }
+    $("#upload").click(function () {
+        let fileoject = $("#input")[0].files[0]
+         const formfile = new FormData()
+        formfile.append("file",fileoject)
+         $.ajax({
+            url:"/upload/"+fileoject.name,
+            data:formfile,
+            method: 'post',
+            dataType: "json",
+            cache: false,//上传文件无需缓存
+            processData: false,//用于对data参数进行序列化处理 这里必须false
+            contentType: false, //必须
+            success: function (result) {
+                            console.log(result)
+                            console.log("Upload success!");
+                        },
+        })
+
+    })
+
+
+</script>
+</html>
