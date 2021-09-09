@@ -39,9 +39,15 @@ th
 
 
 <div class="main">
-    <div>
+    <div id="tableDiv">
          <table class="center" id="filetable">
-            <tr >
+            <tr id="labels">
+                <th>Index</th>
+                <th>filename</th>
+                <th>delete</th>
+                <th>download</th>
+            </tr>
+             <tr id="dataline">
                 <th>Index</th>
                 <th>filename</th>
                 <th>delete</th>
@@ -60,9 +66,9 @@ th
 
 </body>
 <script>
-    $(loadfiles);
+    $(onPageload);
     function onPageload(){
-
+        loadfiles()
     }
     function loadfiles(){
         $.ajax({
@@ -71,20 +77,28 @@ th
             success(data){
                 data = data.filelist
                 console.log(data)
-                $("#filetable data").remove()
+                let contents="<table class='center' id='filetable'>"+
+                "<tr>"+
+                "<th>Index</th>"+
+                "<th>filename</th>"+
+                "<th>delete</th>"+
+                "<th>download</th>"+
+            "</tr>"
                 for(let i =0;i<data.length;i++){
-                    console.log(data[i])
-                    $("#filetable").append(
-                        "<tr id='data'>" +
+                    console.log(data[i]);
+                    contents=contents+"<tr id='dataline'>" +
                         "<td>"+i+"</td>"+
                         "<td>"+data[i]+"</td>"+
                         "<td>"+"<button onClick='deletefile("+i+")'>delete</button>"+"</td>"+
                         "<td>"+ "<button onclick='downloadfile("+i+")'>download</button>"+"</td>"+
-                        "</tr>"
+                        "</tr>";
 
-                    )
+
                 }
-            },
+                contents+="</table>"
+                $("#filetable").replaceWith(contents);
+                },
+
             error(info){
                 console.log(info)
             }
@@ -107,6 +121,7 @@ th
                 console.log(info)
             }
         })
+        loadfiles()
     }
     $("#upload").click(function () {
         let fileoject = $("#input")[0].files[0]
@@ -120,11 +135,17 @@ th
             cache: false,//上传文件无需缓存
             processData: false,//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
-            success: function (result) {
+            success(result) {
+                            loadfiles();
                             console.log(result)
                             console.log("Upload success!");
                         },
+             error(info){
+                console.log(info)
+             }
         })
+        loadfiles()
+
 
     })
 
