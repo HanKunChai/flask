@@ -37,10 +37,10 @@ def listfiles():
     files = os.listdir(cfg.filepath)
     return {'filelist': files}
 
-@app.route('/download/<string:index>')
-def download(index):
+@app.route('/download/<string:filename>')
+def download(filename):
     files = os.listdir(cfg.filepath)
-    file = os.path.join(cfg.filepath,files[int(index)])
+    file = os.path.join(cfg.filepath,filename)
     return send_file(file)
 
 if __name__ == '__main__':

@@ -66,6 +66,7 @@ th
 
 </body>
 <script>
+
     $(onPageload);
     function onPageload(){
         loadfiles()
@@ -90,7 +91,7 @@ th
                         "<td>"+i+"</td>"+
                         "<td>"+data[i]+"</td>"+
                         "<td>"+"<button onClick='deletefile("+i+")'>delete</button>"+"</td>"+
-                        "<td>"+ "<button onclick='downloadfile("+i+")'>download</button>"+"</td>"+
+                        "<td>"+ "<button  onclick="+"function()=> {window.open("+""+"download"+data[i]+")}>download</button>"+"</td>"+
                         "</tr>";
 
 
@@ -106,6 +107,7 @@ th
     }
 
     function downloadfile(i){
+        console.log(i)
         window.open('/download/'+i)
     }
     function deletefile(i){
